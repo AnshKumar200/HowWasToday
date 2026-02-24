@@ -9,8 +9,12 @@ const HomePage = () => {
             <div className="flex flex-col min-h-screen gap-5 p-6">
                 <div className="flex flex-col items-center gap-5 flex-1 justify-center">
                     <div className="text-5xl flex flex-col items-center gap-4">
-                        <div>
-                            <Cube face={"happy"} />
+                        <div className="flex gap">
+                            <Cube face={"amazing"} />
+                            <Cube face={"good"} />
+                            <Cube face={"okay"} />
+                            <Cube face={"meh"} />
+                            <Cube face={"bad"} />
                         </div>
                         <div>Every ‘good’, ‘meh’, and ‘amazing’ day - all in one place.</div>
                         <div>So... how was today, really?</div>
