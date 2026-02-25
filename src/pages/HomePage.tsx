@@ -1,10 +1,25 @@
 import { ChevronDown } from "lucide-react"
 import { SiAndroid, SiGithub } from "react-icons/si"
-import { Link } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 import { Cube } from "../components/Cubes"
 import NavbarMainPage from "../components/NavbarMainPage"
+import { useAuth } from "../context/AuthContext"
 
 const HomePage = () => {
+    const { user, signInWithGoogle } = useAuth();
+    const navigate = useNavigate();
+
+    const handleLogin = async () => {
+        if (user) {
+            navigate('/activity')
+            return;
+        }
+        try {
+            await signInWithGoogle();
+            navigate('/activity')
+        } catch (err) { }
+    }
+
     return (
         <div className="">
             <NavbarMainPage />
@@ -22,15 +37,15 @@ const HomePage = () => {
                         <div>So... how was today, really?</div>
                     </div>
                     <div className="flex flex-col gap-5 text-lg font-medium w-fit">
-                        <Link to='activity' className="p-4 rounded-xl flex gap-2 items-center bg-black text-white justify-center">
+                        <button onClick={handleLogin} className="p-4 rounded-xl flex gap-2 items-center bg-black text-white justify-center cursor-pointer">
                             <div>Get Started</div>
-                        </Link>
+                        </button>
 
                         <div className="flex gap-5">
-                            <button className="p-4 rounded-xl flex gap-2 items-center bg-white justify-center">
+                            <a href="https://github.com/AnshKumar200/HowWasToday" target="_blank" className="p-4 rounded-xl flex gap-2 items-center bg-white justify-center">
                                 <SiGithub />
                                 <div>View on GitHub</div>
-                            </button>
+                            </a>
                             <button className="p-4 bg-green-200 rounded-xl flex gap-2 items-center justify-center">
                                 <SiAndroid />
                                 <div>Download for Android (Soon)</div>

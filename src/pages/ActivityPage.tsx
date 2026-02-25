@@ -67,7 +67,8 @@ const ActivityPage = () => {
                     </div>
                 </div>
                 <div className="bg-blue-200 flex-1">
-                    log streak + quote based on today's mood/random 
+                    <div>You've shown up for yourself [] days in a row </div>
+                    <div>( quote data and choose a random one for now )</div>
                 </div>
             </div>
         </div>
