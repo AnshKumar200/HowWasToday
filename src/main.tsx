@@ -13,7 +13,6 @@ const router = createBrowserRouter([
         children: [
             { index: true, element: <HomePage /> },
             { path: "activity", element: <ActivityPage /> }
-
         ]
     }
 ])

@@ -6,7 +6,7 @@ import { okay } from './okay';
 
 export type FaceType = "amazing" | "good" | "okay" | "meh" | "bad";
 
-export const faces = {
+export const FACES = {
     amazing,
     good,
     okay,

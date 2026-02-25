@@ -5,3 +5,7 @@
 @theme {
     --font-dm: 'DM Sans', sans-serif;
 }
+
+html {
+    background-color: #FAF4F2;
+}
