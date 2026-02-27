@@ -1,7 +1,6 @@
 import { onAuthStateChanged, signInWithPopup, signOut, type User } from "firebase/auth"
 import { createContext, useContext, useEffect, useState } from "react"
 import { auth, googleProvider } from "../firebase";
-import { useNavigate } from "react-router-dom";
 
 interface AuthContextType {
     user: User | null;

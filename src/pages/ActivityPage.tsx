@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import TodayNotDone from "../components/TodayNotDone";
 import NavbarActivityPage from "../components/NavbarActivityPage";
 import { VIEWS, type ViewType } from "../components/views";
+import { api } from "../lib/api";
 
 const viewList: { key: ViewType; label: string }[] = [
     { key: "year", label: "Last Year" },
@@ -13,11 +14,26 @@ const viewList: { key: ViewType; label: string }[] = [
 ]
 
 const ActivityPage = () => {
-    const [todayDone, setTodayDone] = useState(true);
+    const [todayDone, setTodayDone] = useState(false);
+    const [loading, setLoading] = useState(true);
     const [viewing, setViewing] = useState<ViewType>("today");
     const [sliderStyle, setSliderStyle] = useState<React.CSSProperties>({});
     const buttonRefs = useRef<Record<string, HTMLButtonElement | null>>({});
     const containerRef = useRef<HTMLDivElement | null>(null);
+
+    useEffect(() => {
+        const checkToday = async () => {
+            try {
+                await api.get("/mood");
+                setTodayDone(true);
+            } catch (err: any) {
+                setTodayDone(false);
+            } finally {
+                setLoading(false)
+            }
+        }
+        checkToday();
+    }, [])
 
     useEffect(() => {
         const activeB = buttonRefs.current[viewing];
@@ -33,6 +49,8 @@ const ActivityPage = () => {
         }
     }, [viewing])
 
+
+    if (loading) return <div>Loading...</div>
     if (!todayDone) {
         return <TodayNotDone onDone={() => setTodayDone(true)} />
     }
