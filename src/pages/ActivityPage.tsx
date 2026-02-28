@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import TodayNotDone from "../components/TodayNotDone";
 import NavbarActivityPage from "../components/NavbarActivityPage";
 import { VIEWS, type ViewType } from "../components/views";
@@ -15,6 +15,7 @@ const viewList: { key: ViewType; label: string }[] = [
 
 const ActivityPage = () => {
     const [todayDone, setTodayDone] = useState(false);
+    const [todayEntry, setTodayEntry] = useState<{ mood: string; note: string } | null>(null);
     const [loading, setLoading] = useState(true);
     const [viewing, setViewing] = useState<ViewType>("today");
     const [sliderStyle, setSliderStyle] = useState<React.CSSProperties>({});
@@ -24,7 +25,8 @@ const ActivityPage = () => {
     useEffect(() => {
         const checkToday = async () => {
             try {
-                await api.get("/mood");
+                const res = await api.get("/mood");
+                setTodayEntry({ mood: res.mood, note: res.note });
                 setTodayDone(true);
             } catch (err: any) {
                 setTodayDone(false);
@@ -35,7 +37,7 @@ const ActivityPage = () => {
         checkToday();
     }, [])
 
-    useEffect(() => {
+    useLayoutEffect(() => {
         const activeB = buttonRefs.current[viewing];
         const container = containerRef.current;
         if (activeB && container) {
@@ -47,12 +49,16 @@ const ActivityPage = () => {
                 height: BRect.height,
             });
         }
-    }, [viewing])
+    }, [viewing, loading])
 
+    const handleMarkedToday = ({ mood, note }: { mood: string, note: string }) => {
+        setTodayEntry({ mood, note })
+        setTodayDone(true);
+    }
 
     if (loading) return <div>Loading...</div>
     if (!todayDone) {
-        return <TodayNotDone onDone={() => setTodayDone(true)} />
+        return <TodayNotDone onDone={handleMarkedToday} />
     }
 
     const ActiveView = VIEWS[viewing];
@@ -69,19 +75,13 @@ const ActivityPage = () => {
                             <button key={key}
                                 ref={(e) => { buttonRefs.current[key] = e }}
                                 onClick={() => setViewing(key)}
-                                className={`z-1 px-5 py-2 rounded-lg transition-all duration-600 ease-in-out ${viewing === key ? "text-white" : ""} cursor-pointer`}
+                                className={`font-medium z-1 px-5 py-2 rounded-lg transition-all duration-600 ease-in-out ${viewing === key ? "text-white" : ""} cursor-pointer`}
                             >{label}</button>
                         ))}
 
                     </div>
                     <div className="flex flex-col flex-1 items-center justify-center text-4xl">
-                        {/* 
-                            graph here if selected < yesterday
-                            month def - scroll to change month? smooth scroll animations. changes on the left as well?
-                            weekly graph? faces in a row?
-                            yearly just the color                        
-                        */}
-                        <ActiveView />
+                        <ActiveView todayEntry={todayEntry} onUpdate={setTodayEntry} />
                     </div>
                 </div>
                 <div className="bg-blue-200 flex-1">

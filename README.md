@@ -4,7 +4,7 @@ A minimal daily mood tracker where you log how you're feeling each day and look 
 ## Goals
 - [x] base frontend
 - [x] login/signup ( basic google done, will add more later )
-- db
+- [x] db
 - graphs for views
 - optimizations
 - final touches
