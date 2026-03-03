@@ -20,16 +20,48 @@ app.use(cors())
 
 app.get('/mood', verifyToken, async (req, res) => {
     const uid = req.uid;
+    const { range } = req.query;
     const now = new Date();
-    const today = now.toISOString().split("T")[0];
+    let startDate: Date;
+    let endDate: Date = now;
+
+    switch (range) {
+        case "today":
+            startDate = new Date(now);
+            startDate.setHours(0, 0, 0, 0);
+            break;
+        case "yesterday":
+            startDate = new Date(now);
+            startDate.setDate(now.getDate() - 1);
+            startDate.setHours(0, 0, 0, 0);
+            endDate = new Date(now);
+            endDate.setDate(now.getDate() - 1);
+            endDate.setHours(23, 59, 59, 999);
+            break;
+        case "week":
+            startDate = new Date(now);
+            const day = startDate.getDay();
+            const diff = day === 0 ? -6 : 1 - day;
+            startDate.setDate(startDate.getDate() + diff);
+            startDate.setHours(0, 0, 0, 0);
+            break;
+        case "month":
+            startDate = new Date(now.getFullYear(), now.getMonth(), 1);
+            break;
+        case "year":
+            startDate = new Date(now.getFullYear(), 0, 1);
+            break;
+        default:
+            res.status(400).json({ error: "invalid range" });
+            return;
+    }
 
     try {
-        const entry = await Mood.findOne({ uid, date: today } as any);
-        if(!entry) {
-            res.status(404).json({ message: "no entry found for today" })
-            return;
-        }
-        res.status(200).json(entry);
+        const entries = await Mood.find({
+            uid,
+            timestamp: { $gte: startDate, $lte: endDate }
+        }).sort({ timestamp: 1 });
+        res.status(200).json(entries);
     } catch (err) {
         res.status(500).json({ error: "not able to find todays entry" })
     }
@@ -54,7 +86,7 @@ app.post('/mood', verifyToken, async (req, res) => {
                     week: getISOWeek(now),
                 }
             },
-            { 
+            {
                 upsert: true,
                 returnDocument: 'after',
                 runValidators: true

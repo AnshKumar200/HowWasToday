@@ -25,9 +25,16 @@ const ActivityPage = () => {
     useEffect(() => {
         const checkToday = async () => {
             try {
-                const res = await api.get("/mood");
-                setTodayEntry({ mood: res.mood, note: res.note });
-                setTodayDone(true);
+                const res = await api.get("/mood?range=today");
+
+                const entry = res?.[0];
+                if (!entry) {
+                    setTodayDone(false);
+                }
+                else {
+                    setTodayEntry({ mood: entry.mood, note: entry.note });
+                    setTodayDone(true);
+                }
             } catch (err: any) {
                 setTodayDone(false);
             } finally {

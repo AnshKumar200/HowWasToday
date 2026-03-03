@@ -1,0 +1,14 @@
+{
+    "good": [
+        "Yesterday had some good energy",
+        "Sounds like yesterday treated you well"
+    ],
+    "bad" : [
+        "Yesterday was a heavy one",
+        "Some days just weigh more then others"
+    ],
+    "good+anxious": [
+        "Happy but buzzing inside",
+        "A bittersweet kind of day"
+    ]
+}
