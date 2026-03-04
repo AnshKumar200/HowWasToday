@@ -16,7 +16,8 @@ export const YesterdayView = () => {
         const checkYesterday = async () => {
             try {
                 const res = await api.get("/mood?range=yesterday");
-
+                console.log(res)
+    
                 const entry = res?.[0];
                 if (entry) {
                     setYesterdayEntry({ mood: entry.mood, note: entry.note });

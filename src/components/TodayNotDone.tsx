@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { api } from "../lib/api";
 import { Cube } from "./Cubes";
+import { formatDate } from "../lib/helper";
 
 type Props = {
     onDone: (entry: { mood: string; note: string }) => void;
@@ -10,10 +11,7 @@ const TodayNotDone = ({ onDone }: Props) => {
     const [saving, setSaving] = useState(false);
 
     const date = new Date();
-    const day = date.getDate();
-    const month = date.toLocaleString('en-US', { month: "long" });
-    const year = date.getFullYear();
-    const formattedDate = `${day} ${month}, ${year}`
+    const formattedDate = formatDate(date)
 
     const handleMark = async (mood: string) => {
         setSaving(true);
