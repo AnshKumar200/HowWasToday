@@ -1,0 +1,37 @@
+{
+    "amazing": [
+        "Days like this remind you that life can feel effortless sometimes. Whatever today brought you, it seems like it was exactly what you needed.",
+        "Some days everything just clicks — conversations flow, work feels easy, and you go to bed smiling. Sounds like today was one of those.",
+        "Moments like this are the ones worth remembering. Not because they’re rare, but because they show how good an ordinary day can become.",
+        "It’s nice when the day ends and you realize things actually went right. Those little victories quietly add up to something great.",
+        "A day like this doesn’t need much explanation. It simply felt good to be in it."
+    ],
+    "good": [
+        "Maybe nothing extraordinary happened today, but it sounds like the day treated you fairly well. Sometimes that’s exactly what we need.",
+        "A good day doesn’t need fireworks. A few things going right is often more than enough.",
+        "Today might not have been perfect, but there was enough good in it to leave a small smile behind.",
+        "Steady days like this are quietly valuable. They keep life moving in the right direction.",
+        "Not every good day is dramatic. Sometimes it’s just the calm feeling that things are going okay."
+    ],
+    "okay": [
+        "Some days simply exist between the highs and lows. They don’t stand out much, but they still move the story forward.",
+        "Nothing spectacular, nothing terrible — just a regular day living your regular life.",
+        "Days like this might feel forgettable, but they’re part of the rhythm that makes the better days shine.",
+        "Maybe today didn’t leave a strong impression. That’s alright — tomorrow might.",
+        "An ordinary day is still a day lived, and sometimes that’s enough."
+    ],
+    "meh": [
+        "Today might have felt a little off, like something just wasn’t quite lining up the way it should.",
+        "Not a terrible day, but definitely one you’d be happy to leave behind.",
+        "Some days feel heavier than they should, even when nothing obvious went wrong.",
+        "Maybe today just didn’t bring much energy or excitement. That happens more often than people admit.",
+        "Days like this are usually just temporary clouds. They pass, even if they linger for a bit."
+    ],
+    "bad": [
+        "Today sounds like it was a difficult one. Some days carry more weight than we expect, and that can be exhausting.",
+        "It’s okay if today didn’t go well. Hard days are part of being human, even if they don’t feel fair in the moment.",
+        "Not every day will treat us kindly, but making it through the day is still something to acknowledge.",
+        "Today may have been rough, but it doesn’t define the whole story. It’s just one page.",
+        "When a day feels heavy, sometimes the best thing you can do is simply let it end and start fresh tomorrow."
+    ]
+}

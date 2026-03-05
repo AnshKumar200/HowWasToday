@@ -1,8 +1,9 @@
-import { useEffect, useLayoutEffect, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import TodayNotDone from "../components/TodayNotDone";
 import NavbarActivityPage from "../components/NavbarActivityPage";
 import { VIEWS, type ViewType } from "../components/views";
 import { api } from "../lib/api";
+import quoteData from '../data/quotes.json'
 
 const viewList: { key: ViewType; label: string }[] = [
     { key: "year", label: "Last Year" },
@@ -12,6 +13,11 @@ const viewList: { key: ViewType; label: string }[] = [
     { key: "today", label: "Today" },
     { key: "tomorrow", label: "Tomorrow" },
 ]
+
+const getRandomText = (main) => {
+    const options = quoteData[main] ?? "";
+    return options[Math.floor(Math.random() * options.length)]
+}
 
 const ActivityPage = () => {
     const [todayDone, setTodayDone] = useState(false);
@@ -63,13 +69,14 @@ const ActivityPage = () => {
         setTodayDone(true);
     }
 
+    const quoteText = useMemo(() => getRandomText(todayEntry?.mood), [todayEntry?.mood])
+
     if (loading) return <div>Loading...</div>
     if (!todayDone) {
         return <TodayNotDone onDone={handleMarkedToday} />
     }
 
     const ActiveView = VIEWS[viewing];
-
     return (
         <div className="flex flex-col flex-1">
             <NavbarActivityPage />
@@ -91,9 +98,9 @@ const ActivityPage = () => {
                         <ActiveView todayEntry={todayEntry} onUpdate={setTodayEntry} />
                     </div>
                 </div>
-                <div className="bg-blue-200 flex-1">
-                    <div>You've shown up for yourself [] days in a row </div>
-                    <div>( quote data and choose a random one for now )</div>
+                <div className="flex flex-col flex-1 text-center border-2 rounded-xl p-5 bg-amber-50 border-gray-400">
+                    <div className="text-xl font-medium">You've shown up for yourself [] days in a row </div>
+                    <div className="flex-1 flex items-center text-4xl">{quoteText}</div>
                 </div>
             </div>
         </div>
